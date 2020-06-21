@@ -1,6 +1,7 @@
 # laguerre_transformations
 A library for visualising the mathematical transformations known as
-Laguerre transformations.
+Laguerre transformations. See
+[Wikipedia](https://en.wikipedia.org/wiki/laguerre_transformations) for more.
 
 Laguerre transformations act on oriented lines in the plane. They don't
 act on points.
