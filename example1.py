@@ -15,5 +15,5 @@ transformation = dual_matrix(3,5,-1,3,9,-6,4,2)
 
 animate_transformation(transformation,
                        circle1 + circle2,
-                       "transformation_animation.gif",
+                       "two_circles.gif",
                        offset=(200,200))

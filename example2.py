@@ -14,5 +14,5 @@ transformation = dual_matrix(3,5,-1,3,9,-6,4,2)
 
 animate_transformation(transformation,
                        grid,
-                       "transformation_animation.gif",
+                       "grid.gif",
                        offset=(200,200))
