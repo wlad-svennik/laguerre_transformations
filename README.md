@@ -36,7 +36,7 @@ of interpolated transformations to two circles, and then saves the result as a
 GIF animation.
 
 The result is:
-![Two circles undergoing Laguerre transformation](two_circles.gif)
+![Two circles undergoing Laguerre transformation](examples/two_circles.gif)
 
 Another example:
 
@@ -54,4 +54,4 @@ animate_transformation(transformation,
 ```
 
 This time, the same sequence of transformations are applied to a square grid.
-Result: ![A grid undergoing a Laguerre transformation](grid.gif)
+Result: ![A grid undergoing a Laguerre transformation](examples/grid.gif)
