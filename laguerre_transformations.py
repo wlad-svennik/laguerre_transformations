@@ -127,7 +127,9 @@ def draw_frames(frames, imgx=900, imgy=900, offset=(0,0), width=1):
 
 def save_animation(images):
     """Saves an animation (usually as a GIF)."""
-    filename = asksaveasfilename(defaultextension='.gif')
+    ftypes = [('GIF file', '.gif'),
+              ('All files', '*')]
+    filename = asksaveasfilename(filetypes=ftypes, defaultextension='.gif')
     images[0].save(filename, save_all=True, loop=0,
           append_images = images[1:])
 
