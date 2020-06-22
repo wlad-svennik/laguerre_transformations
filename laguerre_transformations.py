@@ -133,7 +133,6 @@ def save_animation(images):
 
 def animate_transformation(transformation,
                            lines,
-                           filename,
                            nframes=100,
                            offset=(0,0),
                            width=1):
