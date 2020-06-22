@@ -139,11 +139,10 @@ def animate_transformation(transformation,
                            nframes=100,
                            offset=(0,0),
                            width=1):
-    """Takes as input a transformation, a list of lines, and a filename.
+    """Takes as input a transformation and a list of lines.
     It interpolates the transformation starting from the identity
     transformation. It then animates the result of applying the sequence
-    of interpolated transformations to each line, and saves the result to the
-    specified file."""
+    of interpolated transformations to each line, and displays the result."""
     intermediate_transformations = interpolate(transformation, nframes=nframes)
     frames = apply_transformations(intermediate_transformations, lines)
     images = draw_frames(frames, offset=offset, width=width)
