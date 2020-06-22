@@ -80,9 +80,11 @@ def interpolate(transformation, nframes=50):
         return [transformation]
     transformation = MutableMatrix(transformation)
     print('Taking logarithm of transformation...')
-    log_transformation = simplify(transformation.analytic_func(log(x),x))
+    P, J = transformation.jordan_form()
+    P_inv = P.inv().evalf()
+    log_J = J.log().evalf()
     print('Generating intermediate transformations...')
-    return [re(simplify(exp(log_transformation.evalf() * i/nframes)))
+    return [(P * exp(log_J.evalf() * i/nframes) * P_inv).evalf().as_real_imag()[0]
             for i in range(nframes)]
 
 def rotation(theta):
