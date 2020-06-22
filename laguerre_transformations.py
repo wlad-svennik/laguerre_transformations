@@ -130,8 +130,9 @@ def save_animation(images):
     ftypes = [('GIF file', '.gif'),
               ('All files', '*')]
     filename = asksaveasfilename(filetypes=ftypes, defaultextension='.gif')
-    images[0].save(filename, save_all=True, loop=0,
-          append_images = images[1:])
+    if filename != () and filename != '':
+        images[0].save(filename, save_all=True, loop=0,
+              append_images = images[1:])
 
 def animate_transformation(transformation,
                            lines,
