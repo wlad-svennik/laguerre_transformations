@@ -131,7 +131,7 @@ def save_animation(images, filename):
 def animate_transformation(transformation,
                            lines,
                            filename,
-                           nframes=50,
+                           nframes=100,
                            offset=(0,0),
                            width=1):
     """Takes as input a transformation, a list of lines, and a filename.
