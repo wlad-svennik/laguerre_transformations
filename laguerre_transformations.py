@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
 from PIL import Image, ImageDraw
-from numpy import eye, block, sin, cos, tan, exp, arctan2, sign, matrix, pi
-from numpy.lib.scimath import sqrt
-from scipy.linalg import logm, expm, inv
+from numpy import eye, block, sin, cos, tan, arctan2, sign, matrix, pi
+from scipy.linalg import logm, expm
 
 one = eye(2)
 eps = matrix([[0,1],[0,0]])
@@ -13,7 +12,7 @@ def dual_number(a,b):
 
 def dual_ratio(a,b,c,d):
     return block([[dual_number(a,b)],
-                  [ dual_number(c,d)]])
+                  [dual_number(c,d)]])
 
 def dual_matrix(A,B,C,D,E,F,G,H):
     return block([
