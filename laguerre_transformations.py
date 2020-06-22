@@ -27,27 +27,26 @@ def make_line(theta, R):
     return dual_ratio(sin(theta/2),R*cos(theta/2)/2,
                       cos(theta/2),-R*sin(theta/2)/2)
 
-def sqrt_dual_number(dual):
-    """Takes the square root of a dual number."""
+def inv_sqrt_dual_number(dual):
+    """Takes one over the square root of a dual number."""
     a, b = dual[0,0], dual[0,1]
-    return matrix([[sqrt(a), b/(2*sqrt(a))], [0, sqrt(a)]])
+    inv_sqrt_a = a**-0.5
+    return matrix([[inv_sqrt_a, -b*inv_sqrt_a/(2*a)], [0, inv_sqrt_a]])
 
 def squared(mat):
     return mat @ mat
 
 def normalisation_constant(dr):
-    return sqrt_dual_number(squared(dr[0:2,:]) + squared(dr[2:4,:]))
+    return inv_sqrt_dual_number(squared(dr[0:2,:]) + squared(dr[2:4,:]))
 
 def get_line(dr):
     """Returns the (theta, R) values of a line 'dr' where theta is the angle
     with the x-axis and R is the perpendicular distance from the origin."""
     # Do the following line twice, because otherwise it somehow fails to
     # normalise it some of the time
-    dr = dr @ inv(normalisation_constant(dr))
-    dr = dr @ inv(normalisation_constant(dr))
-    #print(dr)
+    dr = dr @ normalisation_constant(dr)
     theta = 2*arctan2(float(dr[0,0]),float(dr[2,0]))
-    abs_R = sqrt(dr[0,1]**2 + dr[2,1]**2) / sqrt(dr[0,0]**2 + dr[2,0]**2) * 2
+    abs_R = (dr[0,1]**2 + dr[2,1]**2)**0.5 * (dr[0,0]**2 + dr[2,0]**2)**-0.5 * 2
     sign_R = (sign(dr[0,1] * dr[2,0]) * (sin(theta/2)**2 < 1/2)) +\
         (-sign(dr[0,0] * dr[2,1]) * (sin(theta/2)**2 >= 1/2))
     return theta, abs_R * sign_R
@@ -82,9 +81,7 @@ def interpolate(transformation, nframes=50):
     list."""
     if nframes == 1:
         return [transformation]
-    print('Taking logarithm of transformation...')
     log_transformation = logm(transformation)
-    print('Generating intermediate transformations...')
     return [expm(log_transformation * i/nframes).real
             for i in range(nframes)]
 
@@ -102,7 +99,6 @@ def apply_transformations(transformations, lines):
     nframes= len(transformations)
     for i in range(nframes):
         frames.append([])
-        print('Applying transformation', i, '...')
         transformation = transformations[i]
         for line in lines:
             frames[-1].append(transformation @ line)
