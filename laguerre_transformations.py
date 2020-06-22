@@ -27,9 +27,13 @@ def make_line(theta, R):
     return dual_ratio(sin(theta/2),R*cos(theta/2)/2,
                       cos(theta/2),-R*sin(theta/2)/2)
 
+def sqrt_dual_number(dual):
+    """Takes the square root of a dual number."""
+    a, b = dual[0,0], dual[0,1]
+    return Matrix([[sqrt(a), b/(2*sqrt(a))], [0, sqrt(a)]])
 
 def normalisation_constant(dr):
-    return (dr[0:2,:]**2 + dr[2:4,:]**2)**(Integer(1)/2)
+    return sqrt_dual_number(dr[0:2,:]**2 + dr[2:4,:]**2)
 
 def get_line(dr):
     """Returns the (theta, R) values of a line 'dr' where theta is the angle
