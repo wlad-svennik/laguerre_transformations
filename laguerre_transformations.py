@@ -3,6 +3,10 @@
 from PIL import Image, ImageDraw
 from numpy import eye, block, sin, cos, tan, arctan2, sign, matrix, pi
 from scipy.linalg import logm, expm
+import tkinter as tk
+from tkinter.filedialog import asksaveasfilename
+from itertools import count
+from ImageLabel import ImageLabel
 
 one = eye(2)
 eps = matrix([[0,1],[0,0]])
@@ -121,8 +125,9 @@ def draw_frames(frames, imgx=900, imgy=900, offset=(0,0), width=1):
                           width=width, fill=128)
     return images
 
-def save_animation(images, filename):
+def save_animation(images):
     """Saves an animation (usually as a GIF)."""
+    filename = asksaveasfilename(defaultextension='.gif')
     images[0].save(filename, save_all=True, loop=0,
           append_images = images[1:])
 
@@ -140,4 +145,18 @@ def animate_transformation(transformation,
     intermediate_transformations = interpolate(transformation, nframes=nframes)
     frames = apply_transformations(intermediate_transformations, lines)
     images = draw_frames(frames, offset=offset, width=width)
-    save_animation(images, filename)
+    root = tk.Tk()
+    lbl = ImageLabel(root)
+    lbl.pack()
+    lbl.load(images)
+    lbl.configure(background='black')
+    #root.configure(background='gray')
+    save = tk.Button(root,
+                     text="Save",
+                     command=lambda: save_animation(images))
+    pause_play = tk.Button(root,
+                           text="Pause/Play",
+                           command=lambda: lbl.pause_play())
+    save.pack(expand=True, fill=tk.X, side=tk.RIGHT)
+    pause_play.pack(expand=True, fill=tk.X, side=tk.LEFT)
+    root.mainloop()
