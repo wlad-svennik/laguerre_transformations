@@ -147,17 +147,19 @@ def animate_transformation(transformation,
     frames = apply_transformations(intermediate_transformations, lines)
     images = draw_frames(frames, offset=offset, width=width)
     root = tk.Tk()
+    menubar = tk.Menu(root)
+    filemenu = tk.Menu(menubar, tearoff=0)
+    filemenu.add_command(label="Save as...",
+                         command=lambda: save_animation(images))
+    menubar.add_cascade(label="File", menu=filemenu)
     lbl = ImageLabel(root)
     lbl.pack()
     lbl.load(images)
     lbl.configure(background='black')
     #root.configure(background='gray')
-    save = tk.Button(root,
-                     text="Save",
-                     command=lambda: save_animation(images))
     pause_play = tk.Button(root,
                            text="Pause/Play",
                            command=lambda: lbl.pause_play())
-    save.pack(expand=True, fill=tk.X, side=tk.RIGHT)
-    pause_play.pack(expand=True, fill=tk.X, side=tk.LEFT)
+    pause_play.pack(expand=True, fill=tk.X, side=tk.RIGHT)
+    root.config(menu=menubar)
     root.mainloop()
