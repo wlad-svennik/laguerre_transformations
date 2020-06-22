@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
   name = 'laguerre_transformations',
   packages = ['laguerre_transformations'],
-  version = '0.1',
+  version = '0.2',
   license='BSD-3-Clause',
   description = 'Visualize Laguerre transformations.',
   author = 'Ran Gutin',
