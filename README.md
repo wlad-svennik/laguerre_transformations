@@ -12,7 +12,7 @@ Moebius transformations are representable by complex-numbered matrices,
 while Laguerre transformations are representable by *dual-numbered*
 matrices.
 
-The library requires Sympy and PIL.
+The library requires Scipy and Pillow.
 
 Examples:
 

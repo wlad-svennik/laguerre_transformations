@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
 
 from PIL import Image, ImageDraw
-from sympy import *
-from sympy.abc import *
-from sympy import pi
+from numpy import eye, block, sin, cos, tan, exp, arctan2, sign, matrix, pi
+from numpy.lib.scimath import sqrt
+from scipy.linalg import logm, expm, inv
 
 one = eye(2)
-eps = Matrix([[0,1],[0,0]])
+eps = matrix([[0,1],[0,0]])
 
 def dual_number(a,b):
     return a*one + b*eps
 
 def dual_ratio(a,b,c,d):
-    return Matrix([dual_number(a,b),
-                   dual_number(c,d)])
+    return block([[dual_number(a,b)],
+                  [ dual_number(c,d)]])
 
 def dual_matrix(A,B,C,D,E,F,G,H):
-    return Matrix([
+    return block([
         [A*one+B*eps,C*one+D*eps],
         [E*one+F*eps,G*one+H*eps]])
 
@@ -30,22 +30,26 @@ def make_line(theta, R):
 def sqrt_dual_number(dual):
     """Takes the square root of a dual number."""
     a, b = dual[0,0], dual[0,1]
-    return Matrix([[sqrt(a), b/(2*sqrt(a))], [0, sqrt(a)]])
+    return matrix([[sqrt(a), b/(2*sqrt(a))], [0, sqrt(a)]])
+
+def squared(mat):
+    return mat @ mat
 
 def normalisation_constant(dr):
-    return sqrt_dual_number(dr[0:2,:]**2 + dr[2:4,:]**2)
+    return sqrt_dual_number(squared(dr[0:2,:]) + squared(dr[2:4,:]))
 
 def get_line(dr):
     """Returns the (theta, R) values of a line 'dr' where theta is the angle
     with the x-axis and R is the perpendicular distance from the origin."""
     # Do the following line twice, because otherwise it somehow fails to
     # normalise it some of the time
-    dr = dr * normalisation_constant(dr).inv()
-    dr = dr * normalisation_constant(dr).inv()
-    theta = 2*atan2(dr[0,0],dr[2,0])
-    abs_R = sqrt(dr[0,1] ** 2 + dr[2,1] ** 2) / sqrt(dr[0,0] ** 2 + dr[2,0] ** 2) * 2
-    sign_R = Piecewise((sign(dr[0,1] * dr[2,0]), sin(theta/2)**2 < Integer(1)/2),
-                       (-sign(dr[0,0] * dr[2,1]), True))
+    dr = dr @ inv(normalisation_constant(dr))
+    dr = dr @ inv(normalisation_constant(dr))
+    #print(dr)
+    theta = 2*arctan2(float(dr[0,0]),float(dr[2,0]))
+    abs_R = sqrt(dr[0,1]**2 + dr[2,1]**2) / sqrt(dr[0,0]**2 + dr[2,0]**2) * 2
+    sign_R = (sign(dr[0,1] * dr[2,0]) * (sin(theta/2)**2 < 1/2)) +\
+        (-sign(dr[0,0] * dr[2,1]) * (sin(theta/2)**2 >= 1/2))
     return theta, abs_R * sign_R
 
 def translation(x,y):
@@ -58,7 +62,7 @@ def make_circle(centre, radius, nlines=100):
     """Returns a list of lines (as dual number ratios) which are tangent
     to a circle of given centre and radius."""
     cx, cy = centre
-    return [translation(cx,cy) * make_line(2*i*pi/nlines, radius)
+    return [translation(cx,cy) @ make_line(2*i*pi/nlines, radius)
             for i in range(0,nlines)]
 
 def make_grid(nlines=100, spacing=100):
@@ -69,7 +73,7 @@ def make_grid(nlines=100, spacing=100):
 
 def dilatation(t):
     """Returns a matrix that represents an axial dilatation."""
-    return Matrix([[one,t*eps/2],[-t*eps/2,one]])
+    return matrix([[one,t*eps/2],[-t*eps/2,one]])
 
 def interpolate(transformation, nframes=50):
     """Returns a list of transformations that interpolates between the
@@ -78,19 +82,16 @@ def interpolate(transformation, nframes=50):
     list."""
     if nframes == 1:
         return [transformation]
-    transformation = MutableMatrix(transformation)
     print('Taking logarithm of transformation...')
-    P, J = transformation.jordan_form()
-    P_inv = P.inv().evalf()
-    log_J = J.log().evalf()
+    log_transformation = logm(transformation)
     print('Generating intermediate transformations...')
-    return [(P * exp(log_J.evalf() * i/nframes) * P_inv).evalf().as_real_imag()[0]
+    return [expm(log_transformation * i/nframes).real
             for i in range(nframes)]
 
 def rotation(theta):
     """Returns a matrix that represents a rotation about the origin
     as a Laguerre transformation."""
-    return Matrix([[cos(theta/2)*one,-sin(theta/2)*one],
+    return matrix([[cos(theta/2)*one,-sin(theta/2)*one],
                     [sin(theta/2)*one,cos(theta/2)*one]])
 
 def apply_transformations(transformations, lines):
@@ -104,7 +105,7 @@ def apply_transformations(transformations, lines):
         print('Applying transformation', i, '...')
         transformation = transformations[i]
         for line in lines:
-            frames[-1].append((transformation * line).evalf())
+            frames[-1].append(transformation @ line)
     return frames
 
 def draw_frames(frames, imgx=900, imgy=900, offset=(0,0), width=1):
@@ -116,12 +117,12 @@ def draw_frames(frames, imgx=900, imgy=900, offset=(0,0), width=1):
         print('Drawing frame', i, '...')
         draw = ImageDraw.Draw(images[i])
         for line in frames[i]:
-            theta, R = get_line(offsetting_translation * line)
+            theta, R = get_line(offsetting_translation @ line)
             if cos(theta)**2 > 1/2:
                 draw.line((0,R/cos(theta),imgx,R/cos(theta) - imgx*tan(theta)),
                           width=width, fill=128)
             else:
-                draw.line((R/sin(theta),0,R/sin(theta) - imgy*cot(theta),imgy),
+                draw.line((R/sin(theta),0,R/sin(theta) - imgy*tan(pi/2 - theta),imgy),
                           width=width, fill=128)
     return images
 
