@@ -101,7 +101,7 @@ def apply_transformations(transformations, lines):
             frames[-1].append((transformation * line).evalf())
     return frames
 
-def draw_frames(frames, imgx=900, imgy=900, offset=(0,0)):
+def draw_frames(frames, imgx=900, imgy=900, offset=(0,0), width=1):
     """Returns a list of images which together make up an animation."""
     offsetting_translation = translation(*offset)
     nframes = len(frames)
@@ -113,10 +113,10 @@ def draw_frames(frames, imgx=900, imgy=900, offset=(0,0)):
             theta, R = get_line(offsetting_translation * line)
             if cos(theta)**2 > 1/2:
                 draw.line((0,R/cos(theta),imgx,R/cos(theta) - imgx*tan(theta)),
-                          fill=128)
+                          width=width, fill=128)
             else:
                 draw.line((R/sin(theta),0,R/sin(theta) - imgy*cot(theta),imgy),
-                          fill=128)
+                          width=width, fill=128)
     return images
 
 def save_animation(images, filename):
@@ -128,7 +128,8 @@ def animate_transformation(transformation,
                            lines,
                            filename,
                            nframes=50,
-                           offset=(0,0)):
+                           offset=(0,0),
+                           width=1):
     """Takes as input a transformation, a list of lines, and a filename.
     It interpolates the transformation starting from the identity
     transformation. It then animates the result of applying the sequence
@@ -136,5 +137,5 @@ def animate_transformation(transformation,
     specified file."""
     intermediate_transformations = interpolate(transformation, nframes=nframes)
     frames = apply_transformations(intermediate_transformations, lines)
-    images = draw_frames(frames, offset=offset)
+    images = draw_frames(frames, offset=offset, width=width)
     save_animation(images, filename)
