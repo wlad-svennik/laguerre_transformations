@@ -7,12 +7,10 @@ Laguerre transformations act on oriented lines in the plane. They don't
 act on points.
 
 Laguerre transformations are analogous to the Moebius transformations.
-Both are representable by 2x2 matrices. The difference being that 
-Moebius transformations are representable by complex-numbered matrices,
-while Laguerre transformations are representable by *dual-numbered*
+Both are representable by 2x2 matrices. The difference between them is that 
+while Moebius transformations can naturally be represented by complex-numbered
+matrices, Laguerre transformations can instead be represented by *dual-numbered*
 matrices.
-
-The library requires Scipy and Pillow.
 
 Examples:
 
@@ -31,7 +29,8 @@ animate_transformation(transformation,
 
 This snippet interpolates between the identity matrix and the given
 transformation (represented as a dual number matrix), applies this sequence
-of interpolated transformations to two circles, and then displays the result as a GIF animation.
+of interpolated transformations to two circles, and then displays the result
+as a GIF animation.
 
 The result is:
 ![Two circles undergoing Laguerre transformation](examples/two_circles.gif)
