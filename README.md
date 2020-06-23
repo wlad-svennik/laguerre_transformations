@@ -70,5 +70,5 @@ $ git clone https://github.com/ogogmad/laguerre_transformations/
 Then in the directory you cloned, simply run:
 
 ```sh
-python setup.py install
+$ python setup.py install
 ```
