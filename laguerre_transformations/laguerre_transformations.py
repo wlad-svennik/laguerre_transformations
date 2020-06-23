@@ -5,6 +5,7 @@ from numpy import eye, block, sin, cos, tan, arctan2, sign, matrix, pi
 from scipy.linalg import logm, expm
 import tkinter as tk
 from tkinter.filedialog import asksaveasfilename
+import tkinter.font as font
 from itertools import count
 from .ImageLabel import ImageLabel
 
@@ -158,7 +159,8 @@ def animate_transformation(transformation,
     lbl.configure(background='black')
     #root.configure(background='gray')
     pause_play = tk.Button(root,
-                           text="Pause/Play",
+                           text="⏯️",
+                           font=font.Font(size=30),
                            command=lambda: lbl.pause_play())
     pause_play.pack(expand=True, fill=tk.X, side=tk.RIGHT)
     root.config(menu=menubar)
