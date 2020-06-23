@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from PIL import Image, ImageDraw
-from numpy import eye, block, sin, cos, tan, arctan2, sign, matrix, pi
+from numpy import eye, block, sin, cos, tan, arctan2, sign, array, pi
 from scipy.linalg import logm, expm
 import tkinter as tk
 from tkinter.filedialog import asksaveasfilename
@@ -10,7 +10,7 @@ from itertools import count
 from .ImageLabel import ImageLabel
 
 one = eye(2)
-eps = matrix([[0,1],[0,0]])
+eps = array([[0,1],[0,0]])
 
 def dual_number(a,b):
     return a*one + b*eps
