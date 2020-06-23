@@ -2,13 +2,13 @@ from distutils.core import setup
 setup(
   name = 'laguerre_transformations',
   packages = ['laguerre_transformations'],
-  version = '0.22',
+  version = '0.23',
   license='BSD-3-Clause',
   description = 'Visualize Laguerre transformations.',
   author = 'Ran Gutin',
   author_email = 'jkabrg@gmail.com',
   url = 'https://github.com/ogogmad/laguerre_transformations',
-  download_url = 'https://github.com/ogogmad/laguerre_transformations/archive/v_022.tar.gz',
+  download_url = 'https://github.com/ogogmad/laguerre_transformations/archive/v_023.tar.gz',
   keywords = ['mathematics', 'transformations', 'geometry', 'hypercomplex'],
   install_requires=[
           'scipy',
