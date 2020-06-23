@@ -76,7 +76,7 @@ def make_grid(nlines=100, spacing=100):
 
 def dilatation(t):
     """Returns a matrix that represents an axial dilatation."""
-    return matrix([[one,t*eps/2],[-t*eps/2,one]])
+    return block([[one,t*eps/2],[-t*eps/2,one]])
 
 def interpolate(transformation, nframes=50):
     """Returns a list of transformations that interpolates between the
@@ -92,7 +92,7 @@ def interpolate(transformation, nframes=50):
 def rotation(theta):
     """Returns a matrix that represents a rotation about the origin
     as a Laguerre transformation."""
-    return matrix([[cos(theta/2)*one,-sin(theta/2)*one],
+    return block([[cos(theta/2)*one,-sin(theta/2)*one],
                     [sin(theta/2)*one,cos(theta/2)*one]])
 
 def apply_transformations(transformations, lines):
