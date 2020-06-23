@@ -116,7 +116,6 @@ def draw_frames(frames, imgx=900, imgy=900, offset=(0,0), width=1):
     nframes = len(frames)
     images = [Image.new("RGB", (imgx, imgy)) for i in range(nframes)]
     for i in range(len(frames)):
-        print('Drawing frame', i, '...')
         draw = ImageDraw.Draw(images[i])
         for line in frames[i]:
             theta, R = get_line(offsetting_translation @ line)
