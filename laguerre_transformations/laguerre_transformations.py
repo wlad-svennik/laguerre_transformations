@@ -6,7 +6,6 @@ from scipy.linalg import logm, expm
 import tkinter as tk
 from tkinter.filedialog import asksaveasfilename
 import tkinter.font as font
-from itertools import count
 from .ImageLabel import ImageLabel
 
 one = eye(2)
@@ -35,7 +34,7 @@ def inv_sqrt_dual_number(dual):
     """Takes one over the square root of a dual number."""
     a, b = dual[0,0], dual[0,1]
     inv_sqrt_a = a**-0.5
-    return matrix([[inv_sqrt_a, -b*inv_sqrt_a/(2*a)], [0, inv_sqrt_a]])
+    return array([[inv_sqrt_a, -b*inv_sqrt_a/(2*a)], [0, inv_sqrt_a]])
 
 def squared(mat):
     return mat @ mat
