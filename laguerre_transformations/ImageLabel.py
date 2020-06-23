@@ -9,7 +9,7 @@ class ImageLabel(tk.Label):
         self.frames = []
         self.paused = False
         try:
-            for i in count(1):
+            for i in count(0):
                 self.frames.append(ImageTk.PhotoImage(im[i]))
         except IndexError:
             pass
