@@ -26,14 +26,12 @@ transformation = dual_matrix(3,5,-1,3,9,-6,4,2)
 
 animate_transformation(transformation,
                        circle1 + circle2,
-                       "two_circles.gif",
                        offset=(200,200))
 ```
 
 This snippet interpolates between the identity matrix and the given
 transformation (represented as a dual number matrix), applies this sequence
-of interpolated transformations to two circles, and then saves the result as a
-GIF animation.
+of interpolated transformations to two circles, and then displays the result as a GIF animation.
 
 The result is:
 ![Two circles undergoing Laguerre transformation](examples/two_circles.gif)
@@ -49,7 +47,6 @@ transformation = dual_matrix(3,5,-1,3,9,-6,4,2)
 
 animate_transformation(transformation,
                        grid,
-                       "grid.gif",
                        offset=(200,200))
 ```
 

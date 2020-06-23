@@ -149,7 +149,7 @@ def animate_transformation(transformation,
     root = tk.Tk()
     menubar = tk.Menu(root)
     filemenu = tk.Menu(menubar, tearoff=0)
-    filemenu.add_command(label="Save as...",
+    filemenu.add_command(label="Save As...",
                          command=lambda: save_animation(images))
     menubar.add_cascade(label="File", menu=filemenu)
     lbl = ImageLabel(root)
