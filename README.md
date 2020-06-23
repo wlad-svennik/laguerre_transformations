@@ -52,3 +52,23 @@ animate_transformation(transformation,
 
 This time, the same sequence of transformations are applied to a square grid.
 Result: ![A grid undergoing a Laguerre transformation](examples/grid.gif)
+
+## Installation
+
+To install using PyPI, run the command:
+
+```sh
+$ pip install laguerre_transformations
+```
+
+To install from Github source, first clone using `git`:
+
+```sh
+$ git clone https://github.com/ogogmad/laguerre_transformations/
+```
+
+Then in the directory you cloned, simply run:
+
+```sh
+python setup.py install
+```
