@@ -95,6 +95,9 @@ def rotation(theta):
     return block([[cos(theta/2)*one,-sin(theta/2)*one],
                     [sin(theta/2)*one,cos(theta/2)*one]])
 
+def rotation_about_centre(centre, theta):
+    return translation(*centre) @ rotation(theta) @ translation(-centre[0],-centre[1])
+
 def apply_transformations(transformations, lines):
     """Applies a list of transformations to a list of lines, generating
     a list of 'frames'. A 'frame' in this case is a list of lines
