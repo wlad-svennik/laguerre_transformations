@@ -6,7 +6,10 @@ from scipy.linalg import logm, expm
 import tkinter as tk
 from tkinter.filedialog import asksaveasfilename
 import tkinter.font as font
-from .ImageLabel import ImageLabel
+try:
+    from .ImageLabel import ImageLabel
+except ImportError:
+    from ImageLabel import ImageLabel
 
 one = eye(2)
 eps = array([[0,1],[0,0]])
