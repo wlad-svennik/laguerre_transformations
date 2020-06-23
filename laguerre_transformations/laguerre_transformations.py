@@ -77,6 +77,16 @@ def dilatation(t):
     """Returns a matrix that represents an axial dilatation."""
     return block([[one,t*eps/2],[-t*eps/2,one]])
 
+def dual_matrix_determinant(m):
+    a = m[0:2,0:2]
+    b = m[0:2,2:4]
+    c = m[2:4,0:2]
+    d = m[2:4,2:4]
+    return a @ d  - b @ c
+
+class DeterminantNegativeException(Exception):
+    pass
+
 def interpolate(transformation, nframes=50):
     """Returns a list of transformations that interpolates between the
     identity transformation and the specified transformation. If 'nframes'
@@ -84,6 +94,8 @@ def interpolate(transformation, nframes=50):
     list."""
     if nframes == 1:
         return [transformation]
+    if dual_matrix_determinant(transformation)[0,0] <= 0:
+        raise DeterminantNegativeException
     log_transformation = logm(transformation)
     return [expm(log_transformation * i/nframes).real
             for i in range(nframes)]
@@ -145,7 +157,11 @@ def animate_transformation(transformation,
     It interpolates the transformation starting from the identity
     transformation. It then animates the result of applying the sequence
     of interpolated transformations to each line, and displays the result."""
-    intermediate_transformations = interpolate(transformation, nframes=nframes)
+    try:
+        intermediate_transformations = interpolate(transformation, nframes=nframes)
+    except DeterminantNegativeException:
+        print("Determinant of the input matrix is negative. Set nframes=1.")
+        return
     frames = apply_transformations(intermediate_transformations, lines)
     images = draw_frames(frames, offset=offset, width=width)
     root = tk.Tk()
