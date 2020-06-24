@@ -2,9 +2,9 @@ from PIL import Image, ImageDraw
 from numpy import eye, block, sin, cos, tan, arctan2, sign, array, pi
 from scipy.linalg import logm, expm
 try:
-    from .Display import Display
+    from .Display import display
 except ImportError:
-    from Display import Display
+    from Display import display
 
 one = eye(2)
 eps = array([[0,1],[0,0]])
@@ -152,7 +152,8 @@ def animate_transformation(transformation,
                            lines,
                            nframes=100,
                            offset=(0,0),
-                           width=1):
+                           width=1,
+                           title=None):
     """Takes as input a transformation and a list of lines.
     It interpolates the transformation starting from the identity
     transformation. It then animates the result of applying the sequence
@@ -165,4 +166,4 @@ def animate_transformation(transformation,
         return
     frames = apply_transformations(intermediate_transformations, lines)
     images = draw_frames(frames, offset=offset, width=width)
-    Display(images).start()
+    display(images, title)
