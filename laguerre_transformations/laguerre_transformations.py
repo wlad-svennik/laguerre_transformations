@@ -10,13 +10,17 @@ one = eye(2)
 eps = array([[0,1],[0,0]])
 
 def dual_number(a,b):
+    """Uses a 2x2 matrix to represent a dual number."""
     return a*one + b*eps
 
 def dual_ratio(a,b,c,d):
+    """Uses a 4x2 matrix to represent a pair of dual numbers, understood
+    as a point on the projective dual line."""
     return block([[dual_number(a,b)],
                   [dual_number(c,d)]])
 
 def dual_matrix(A,B,C,D,E,F,G,H):
+    """Uses a 4x4 matrix to represent a 2x2 matrix of dual numbers."""
     return block([
         [A*one+B*eps,C*one+D*eps],
         [E*one+F*eps,G*one+H*eps]])
@@ -110,6 +114,8 @@ def rotation(theta):
                     [sin(theta/2)*one,cos(theta/2)*one]])
 
 def rotation_about_centre(centre, theta):
+    """Returns a matrix that represents a rotation about the given centre
+    as a Laguerre transformation"""
     return translation(*centre) @ rotation(theta) @ translation(-centre[0],-centre[1])
 
 def apply_transformations(transformations, lines):
