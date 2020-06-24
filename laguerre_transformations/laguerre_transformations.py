@@ -35,17 +35,22 @@ def inv_sqrt_dual_number(dual):
     return array([[inv_sqrt_a, -b*inv_sqrt_a/(2*a)], [0, inv_sqrt_a]])
 
 def squared(mat):
+    """Multiplies a matrix by itself."""
     return mat @ mat
 
-def normalisation_constant(dr):
-    return inv_sqrt_dual_number(squared(dr[0:2,:]) + squared(dr[2:4,:]))
+def normalise(dr):
+    """Normalises a dual number ratio [a:b] to [a':b'] such that
+    (a')**2 + (b')**2 == 1"""
+    normalisation_constant = inv_sqrt_dual_number(squared(dr[0:2,:]) +
+                                                  squared(dr[2:4,:]))
+    return dr @ normalisation_constant
 
 def get_line(dr):
     """Returns the (theta, R) values of a line 'dr' where theta is the angle
     with the x-axis and R is the perpendicular distance from the origin."""
     # Do the following line twice, because otherwise it somehow fails to
     # normalise it some of the time
-    dr = dr @ normalisation_constant(dr)
+    dr = normalise(dr)
     theta = 2*arctan2(float(dr[0,0]),float(dr[2,0]))
     abs_R = (dr[0,1]**2 + dr[2,1]**2)**0.5 * (dr[0,0]**2 + dr[2,0]**2)**-0.5 * 2
     sign_R = (sign(dr[0,1] * dr[2,0]) * (sin(theta/2)**2 < 1/2)) +\
