@@ -1,32 +1,15 @@
-#!/bin/python
-
 from mttkinter import mtTkinter as tk
 from itertools import count
 from PIL import ImageTk
 from tkinter.filedialog import asksaveasfilename
 import tkinter.font as font
-from threading import Thread
-import pickle
-import sys
-import subprocess
-
-""" The `display` function displays a sequence of images as an animation
-with a given title.
-A major goal of this file is to allow an animation to be displayed without
-blocking the terminal. Ideally, this would be achieved by launching Tkinter
-in a separate thread. Unfortunately, that idea doesn't work because Tkinter
-doesn't play well with multiple threads. So to get around the problem,
-we launch Tkinter in a separate process, not a separate thread."""
+from multiprocessing import Process
 
 def display(images, title):
-    """Display an animated sequence of images in a new window and proces."""
-    # We launch the new process inside a new thread because subprocess.run
-    # is blocking
-    Thread(target=lambda:
-        subprocess.run(['python',__file__],
-                       input=pickle.dumps((images,title)))).start()
+    """Display an animated sequence of images in a new window and process."""
+    Process(target=go, args=(images,title)).start()
     
-def main(images, title):
+def go(images, title):
     root = tk.Tk()
     if title is not None:
         root.title(title)
@@ -93,7 +76,3 @@ def save_animation(images):
     if filename != () and filename != '':
         images[0].save(filename, save_all=True, loop=0,
               append_images = images[1:])
-
-if __name__ == "__main__":
-    images, title = pickle.loads(sys.stdin.buffer.read())
-    main(images, title)
