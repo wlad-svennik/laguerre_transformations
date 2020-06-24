@@ -1,15 +1,10 @@
-#!/usr/bin/env python3
-
 from PIL import Image, ImageDraw
 from numpy import eye, block, sin, cos, tan, arctan2, sign, array, pi
 from scipy.linalg import logm, expm
-import tkinter as tk
-from tkinter.filedialog import asksaveasfilename
-import tkinter.font as font
 try:
-    from .ImageLabel import ImageLabel
+    from .Display import Display
 except ImportError:
-    from ImageLabel import ImageLabel
+    from Display import Display
 
 one = eye(2)
 eps = array([[0,1],[0,0]])
@@ -142,15 +137,6 @@ def draw_frames(frames, imgx=900, imgy=900, offset=(0,0), width=1):
                           width=width, fill=128)
     return images
 
-def save_animation(images):
-    """Saves an animation (usually as a GIF)."""
-    ftypes = [('GIF file', '.gif'),
-              ('All files', '*')]
-    filename = asksaveasfilename(filetypes=ftypes, defaultextension='.gif')
-    if filename != () and filename != '':
-        images[0].save(filename, save_all=True, loop=0,
-              append_images = images[1:])
-
 def animate_transformation(transformation,
                            lines,
                            nframes=100,
@@ -168,21 +154,4 @@ def animate_transformation(transformation,
         return
     frames = apply_transformations(intermediate_transformations, lines)
     images = draw_frames(frames, offset=offset, width=width)
-    root = tk.Tk()
-    menubar = tk.Menu(root)
-    filemenu = tk.Menu(menubar, tearoff=0)
-    filemenu.add_command(label="Save As...",
-                         command=lambda: save_animation(images))
-    menubar.add_cascade(label="File", menu=filemenu)
-    lbl = ImageLabel(root)
-    lbl.pack()
-    lbl.load(images)
-    lbl.configure(background='black')
-    #root.configure(background='gray')
-    pause_play = tk.Button(root,
-                           text="⏯️",
-                           font=font.Font(size=30),
-                           command=lambda: lbl.pause_play())
-    pause_play.pack(expand=True, fill=tk.X, side=tk.RIGHT)
-    root.config(menu=menubar)
-    root.mainloop()
+    Display(images).start()
