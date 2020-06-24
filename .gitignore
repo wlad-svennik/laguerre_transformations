@@ -1,3 +1,6 @@
 *.gif
 *.Result
 __pycache__/
+MANIFEST
+build/
+dist/
