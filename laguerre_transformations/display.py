@@ -7,9 +7,9 @@ from multiprocessing import Process
 
 def display(images, title):
     """Display an animated sequence of images in a new window and process."""
-    Process(target=go, args=(images,title)).start()
+    Process(target=do_display, args=(images,title)).start()
     
-def go(images, title):
+def do_display(images, title):
     root = tk.Tk()
     if title is not None:
         root.title(title)

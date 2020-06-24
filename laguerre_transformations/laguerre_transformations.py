@@ -2,9 +2,9 @@ from PIL import Image, ImageDraw
 from numpy import eye, block, sin, cos, tan, arctan2, sign, array, pi
 from scipy.linalg import logm, expm
 try:
-    from .Display import display
+    from .display import display
 except ImportError:
-    from Display import display
+    from display import display
 
 one = eye(2)
 eps = array([[0,1],[0,0]])
