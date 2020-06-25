@@ -148,6 +148,23 @@ def draw_frames(frames, imgx=900, imgy=900, offset=(0,0), width=1):
                           width=width, fill=128)
     return images
 
+def animate_transformation_without_display(transformation,
+                                           lines,
+                                           nframes=100,
+                                           offset=(0,0),
+                                           width=1,
+                                           title=None):
+    try:
+        intermediate_transformations = interpolate(transformation, nframes=nframes)
+    except DeterminantNegativeException:
+        print("Determinant of the input matrix is negative. Call instead with nframes=1.")
+        print("Note that this determinant is dual-number valued.")
+        return
+    frames = apply_transformations(intermediate_transformations, lines)
+    images = draw_frames(frames, offset=offset, width=width)
+    return images
+
+
 def animate_transformation(transformation,
                            lines,
                            nframes=100,
