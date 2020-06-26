@@ -14,5 +14,6 @@ def display_via_matplotlib(images, title):
     plt.axis("tight")
     plt.axis("image")
     fig.tight_layout(pad=0)
-    fig.canvas.set_window_title(title)
+    if title is not None:
+        fig.canvas.set_window_title(title)
     plt.show()
