@@ -4,7 +4,6 @@ import webbrowser
 import tempfile
 from time import sleep
 
-
 def display_using_moviepy_and_browser_launch(images, title):
     """Display an animated sequence of images in the browser using moviepy."""
     as_arrays = [np.array(image) for image in images]
