@@ -170,7 +170,8 @@ def animate_transformation(transformation,
                            nframes=100,
                            offset=(0,0),
                            width=1,
-                           title=None):
+                           title=None,
+                           via='tk_multiprocess'):
     """Takes as input a transformation and a list of lines.
     It interpolates the transformation starting from the identity
     transformation. It then animates the result of applying the sequence
@@ -183,4 +184,4 @@ def animate_transformation(transformation,
         return
     frames = apply_transformations(intermediate_transformations, lines)
     images = draw_frames(frames, offset=offset, width=width)
-    display(images, title)
+    display(images, title, via=via)
