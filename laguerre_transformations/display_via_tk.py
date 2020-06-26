@@ -1,4 +1,4 @@
-from mttkinter import mtTkinter as tk
+import tkinter as tk
 from itertools import count
 from PIL import ImageTk
 from tkinter.filedialog import asksaveasfilename
