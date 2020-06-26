@@ -18,8 +18,8 @@ options =  ['tk_multiprocess',
             'videofig']
 
 def display(images, title, via='tk_multiprocess'):
-    """Display an animated sequence of images in a new window and process.
-    The keyword argument `via` dictates the method that's used.
+    """Display an animated sequence of images via a chosen a method.
+    Most methods allow the continued use of the Python terminal.
     `via` can be one of ['tk_multiprocess',
                          'matplotlib',
                          'moviepy',
