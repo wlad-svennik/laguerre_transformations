@@ -1,7 +1,6 @@
-from videofig import videofig
-
 def display_via_videofig(images, title):
     """Display an animated sequence of images in a new window."""
+    from videofig import videofig
     # redraw_fn draw frame f in a image sequence
     def redraw_fn(i, axes):
         if not redraw_fn.initialized:

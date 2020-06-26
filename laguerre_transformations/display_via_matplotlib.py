@@ -1,8 +1,8 @@
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
-
 def display_via_matplotlib(images, title):
     """Display an animated sequence of images in a new window."""
+    import matplotlib.pyplot as plt
+    import matplotlib.animation as animation
+
     fig = plt.figure(figsize=(images[0].width/100,images[1].height/100))
     ims = []
     for i in range(len(images)):
