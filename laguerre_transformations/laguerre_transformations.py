@@ -184,4 +184,4 @@ def animate_transformation(transformation,
         return
     frames = apply_transformations(intermediate_transformations, lines)
     images = draw_frames(frames, offset=offset, width=width)
-    display(images, title, via=via)
+    return display(images, title, via=via)

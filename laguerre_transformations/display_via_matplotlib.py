@@ -1,5 +1,5 @@
 def display_via_matplotlib(images, title):
-    """Display an animated sequence of images in a new window."""
+    """Display an animated sequence of images using Matplotlib."""
     import matplotlib.pyplot as plt
     import matplotlib.animation as animation
 
@@ -8,7 +8,7 @@ def display_via_matplotlib(images, title):
     for i in range(len(images)):
         im = plt.imshow(images[i], animated=True)
         ims.append([im])
-    ani = animation.ArtistAnimation(fig, ims, interval=10, blit=True,
+    ani = animation.ArtistAnimation(fig, ims, interval=50, blit=True,
                                     repeat_delay=0)
     plt.axis('off')    
     plt.axis("tight")
@@ -17,3 +17,4 @@ def display_via_matplotlib(images, title):
     if title is not None:
         fig.canvas.set_window_title(title)
     plt.show()
+    return ani
