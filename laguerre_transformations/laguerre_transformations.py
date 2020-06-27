@@ -171,7 +171,7 @@ def animate_transformation(transformation,
                            offset=(0,0),
                            width=1,
                            title=None,
-                           via='tk_multiprocess'):
+                           via='matplotlib'):
     """Takes as input a transformation and a list of lines.
     It interpolates the transformation starting from the identity
     transformation. It then animates the result of applying the sequence

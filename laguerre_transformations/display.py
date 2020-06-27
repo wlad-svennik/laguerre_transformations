@@ -17,7 +17,7 @@ options =  ['tk_multiprocess',
             'moviepy_launch_browser',
             'videofig']
 
-def display(images, title, via='tk_multiprocess'):
+def display(images, title, via='matplotlib'):
     """Display an animated sequence of images via a chosen a method.
     Most methods allow the continued use of the Python terminal.
     `via` can be one of ['tk_multiprocess',
