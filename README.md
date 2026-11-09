@@ -1,73 +1,65 @@
-# laguerre_transformations
-A library for visualising the mathematical transformations known as
-Laguerre transformations. See
-[Wikipedia](https://en.wikipedia.org/wiki/laguerre_transformations) for more.
+# Laguerre transformations
 
-Laguerre transformations act on oriented lines in the plane. They don't
-act on points.
+Python code for visualising Laguerre transformations of oriented lines in the Euclidean plane.
 
-Laguerre transformations are analogous to the Moebius transformations.
-Both are representable by 2x2 matrices. The difference between them is that 
-while Moebius transformations can naturally be represented by complex-numbered
-matrices, Laguerre transformations can instead be represented by *dual-numbered*
-matrices.
+Like Möbius transformations, these can be represented by 2×2 matrices. Here the entries are dual numbers. Circles are represented by their oriented tangent lines, so their images can be drawn by transforming those lines.
 
-Examples:
+## Examples
 
 ```python
-from laguerre_transformations import *
+from laguerre_transformations import (
+    animate_transformation,
+    dual_matrix,
+    make_circle,
+    make_grid,
+)
 
-circle1 = make_circle((100,100),100)
-circle2 = make_circle((50,50),-100)
+circle1 = make_circle((100, 100), 100)
+circle2 = make_circle((50, 50), -100)
+transformation = dual_matrix(3, 5, -1, 3, 9, -6, 4, 2)
 
-transformation = dual_matrix(3,5,-1,3,9,-6,4,2)
-
-animate_transformation(transformation,
-                       circle1 + circle2,
-                       offset=(200,200))
+animation = animate_transformation(
+    transformation,
+    circle1 + circle2,
+    offset=(200, 200),
+)
 ```
 
-This snippet interpolates between the identity matrix and the given
-transformation (represented as a dual number matrix), applies this sequence
-of interpolated transformations to two circles, and then displays the result
-as a GIF animation.
+This interpolates from the identity towards the given transformation and animates its effect on two circles.
 
-The result is:
-![Two circles undergoing Laguerre transformation](examples/two_circles.gif)
+![Two circles undergoing a Laguerre transformation](examples/two_circles.gif)
 
-Another example:
+The same transformation can be applied to a square grid:
 
 ```python
-from laguerre_transformations import *
-
-grid = make_grid()
-
-transformation = dual_matrix(3,5,-1,3,9,-6,4,2)
-
-animate_transformation(transformation,
-                       grid,
-                       offset=(200,200))
+animation = animate_transformation(
+    transformation,
+    make_grid(),
+    offset=(200, 200),
+)
 ```
 
-This time, the same sequence of transformations are applied to a square grid.
-Result: ![A grid undergoing a Laguerre transformation](examples/grid.gif)
+![A grid undergoing a Laguerre transformation](examples/grid.gif)
 
 ## Installation
 
-To install using PyPI, run the command:
+Requires Python 3 with Tk support. To install from this repository:
 
 ```sh
-$ pip install laguerre_transformations
+git clone https://github.com/wlad-svennik/laguerre_transformations.git
+cd laguerre_transformations
+python -m pip install .
 ```
 
-To install from Github source, first clone using `git`:
+The package is also published on [PyPI](https://pypi.org/project/laguerre-transformations/):
 
 ```sh
-$ git clone https://github.com/ogogmad/laguerre_transformations/
+python -m pip install laguerre_transformations
 ```
 
-Then in the directory you cloned, simply run:
+## Background
 
-```sh
-$ python setup.py install
-```
+See [Laguerre transformations on Wikipedia](https://en.wikipedia.org/wiki/Laguerre_transformations) for the mathematical background and [hyperbolic_laguerre_transformations](https://github.com/wlad-svennik/hyperbolic_laguerre_transformations) for the related construction over the split-complex numbers.
+
+The code is available under the [BSD 3-Clause licence](LICENSE.txt).
+
